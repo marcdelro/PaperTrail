@@ -22,13 +22,28 @@ You only make the physical trip when the screen turns green.
 - **Action-Driven Feedback:** Signatories cannot casually "throw back" a document. Rejecting an item requires a mandatory `reasonCode` (e.g., `MISSING_MEMO`), which aggressively highlights in red so the officer knows exactly what to fix before making another trip.
 - **Zero-Noise Committee Feeds:** A read-only global broadcast channel replaces administrative chat noise, ensuring teams are aware of absences (e.g., "Legal Counsel out of office") instantly.
 
-## 🛠 Tech Stack
-This MVP was built for rapid iteration and maximum UI responsiveness during the hackathon:
+## 🛠 Tech Stack (Hackathon Prototype)
+This MVP was built for rapid iteration and maximum UI responsiveness during the pitch:
 - **Core Framework:** React 18 + TypeScript
 - **Build Tool:** Vite (for sub-second Hot Module Replacement)
 - **Styling Engine:** Tailwind CSS v4 (Native ESM Imports)
 - **Architecture:** Zero-dependency, offline-capable local state simulation
 - **UI Paradigm:** Mobile-First Flexbox/Grid layouts bounded in an iPhone chassis simulation
+
+---
+
+## 🗺 Production Roadmap (Future Architecture)
+While the current MVP uses a zero-latency local simulation, the post-hackathon production release is engineered to solve the core "basement connectivity" problem using a robust modern stack:
+
+1. **The Offline-Sync Bridge (WatermelonDB / RxDB)**
+   - **The Problem:** Logistics officers often operate in dead zones (basements, massive warehouses) where cellular data drops.
+   - **The Solution:** A "local-first" JavaScript database on the frontend. When an officer logs a document offline, it saves locally. The moment they walk out of the building and reconnect to 5G, the client automatically syncs the queued actions to the cloud in the background.
+2. **The Real-Time Cloud Backend (Supabase)**
+   - To replace the simulation state, we will leverage Supabase (Backend-as-a-Service) to provide out-of-the-box WebSocket subscriptions. When a Dean hits "Reject" on their desktop, Supabase will instantly push that update directly to the logistics officer's mobile dashboard without requiring a page refresh.
+3. **The Database Layer (PostgreSQL)**
+   - All document states, committees, signatories, and rejection reason codes will be mapped to a strict relational PostgreSQL database to ensure absolute audit-trail integrity (e.g., preventing a document from jumping from "Draft" directly to "Signed" illegally).
+
+---
 
 ## 🚀 How to Run the MVP Locally
 
